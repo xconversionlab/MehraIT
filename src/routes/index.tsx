@@ -18,6 +18,7 @@ function Home() {
   const introSeen = useCart((state) => state.introSeen);
   const dismissIntro = useCart((state) => state.dismissIntro);
   const setCoupon = useCart((state) => state.setCoupon);
+  const biharCities = catalog ? [...new Set(catalog.areas.map((area) => area.city))].join(", ") : "";
 
   return (
     <Shell>
@@ -44,14 +45,14 @@ function Home() {
           {!place.serviceable ? (
             <div className="mt-4 rounded-3xl bg-ink p-4 text-cream">
               <p className="font-semibold">MehraIT is not in {place.pincode || "this pin"} yet.</p>
-              <p className="mt-1 text-sm text-cream/80">We deliver across parts of Bengaluru and Mumbai. Pick a live area to shop.</p>
+              <p className="mt-1 text-sm text-cream/80">This demo currently shows service areas in {biharCities}, Bihar. Choose a listed area to shop.</p>
             </div>
           ) : null}
           {!introSeen ? (
             <div className="mt-4 flex items-start justify-between gap-3 rounded-3xl bg-brand p-4 text-ink">
               <div>
-                <p className="text-xs font-semibold tracking-wide uppercase">Shop smart · Live better</p>
-                <p className="mt-1 text-lg font-semibold">Daily essentials from a store near you, in about {catalog.settings.promise}.</p>
+                <p className="text-xs font-semibold tracking-wide uppercase">Bihar favourites</p>
+                <p className="mt-1 text-lg font-semibold">Everyday essentials and regional favourites from a nearby Bihar store.</p>
               </div>
               <button type="button" onClick={dismissIntro} className="h-9 shrink-0 rounded-full bg-ink px-3 text-sm font-semibold text-cream">
                 Got it
@@ -84,7 +85,7 @@ function Home() {
             })}
           </div>
           <Link to="/search" className="mt-4 flex h-12 items-center rounded-full border border-line bg-cream px-4 text-sm text-muted md:hidden">
-            Search milk, atta, bananas
+            Search sattu, makhana, litti atta
           </Link>
           <section className="mt-6">
             <div className="mb-3 flex items-center justify-between">
@@ -124,8 +125,11 @@ function Home() {
           <footer className="mt-10 border-t border-line pt-4 text-sm text-muted">
             <p className="font-semibold text-ink">{catalog.settings.businessName}</p>
             <p className="mt-1">{catalog.settings.tagline}</p>
-            <p className="mt-1">Care {catalog.settings.supportPhone} · {catalog.settings.supportEmail}</p>
-            <p className="mt-1">GSTIN {catalog.settings.gstin}</p>
+            {catalog.settings.supportPhone || catalog.settings.supportEmail ? (
+              <p className="mt-1">Care { [catalog.settings.supportPhone, catalog.settings.supportEmail].filter(Boolean).join(" · ") }</p>
+            ) : null}
+            {catalog.settings.gstin ? <p className="mt-1">GSTIN {catalog.settings.gstin}</p> : null}
+            <p className="mt-2 text-xs">Service locations and delivery estimates shown here are illustrative demo data.</p>
           </footer>
           {open ? <LocationSheet catalog={catalog} onClose={() => setOpen(false)} /> : null}
         </div>
