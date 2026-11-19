@@ -1,9 +1,9 @@
 # MehraIT — Build Status
 
-Last repository audit: 2026-11-19  
+Last updated: 2026-11-19  
 Default branch: `main`
 
-## Existing implementation found
+## Existing implementation
 
 - React 19 + TypeScript + TanStack Start/Router + Vite + Tailwind CSS 4.
 - MehraIT brand assets and Outfit font files.
@@ -15,23 +15,27 @@ Default branch: `main`
 - PostgreSQL migrations for authentication and commerce schema.
 - Razorpay integration structure and environment-based configuration.
 
-## AI-related product copy audit
+## Bihar prototype localisation
 
-Repository code search for `AI`, `artificial intelligence`, `Grok`, `xAI` and `powered by` returned no matching product-copy results. No AI-branded feature or marketing copy was identified in the application search. Platform/build workspace files are not customer-facing product copy and should not be removed as part of this cleanup.
+- Sample store coverage: Patna, Muzaffarpur and Gaya.
+- PIN-based sample delivery areas: 800001, 800020, 800013, 800008, 842001 and 823001.
+- Bihar Favourites category with Sattu & Litti Essentials, Mithila Makhana and Bihari Sweets.
+- Regional sample products include Chana Sattu, Litti Atta, Mithila Makhana, Roasted Masala Makhana, Bihari Thekua, Chura and seasonal Muzaffarpur Litchi.
+- Sample contact and GSTIN fields are blank pending verified client details.
 
 ## Verification status
 
-The GitHub repository was inspected remotely. No GitHub Actions workflow runs were present at the time of audit. A local development server, production build, typecheck and browser smoke test have not been executed in this audit; therefore the prototype is not certified as deployment-ready.
+The source has been prepared for a fresh Vercel build. The repository's generated `.vercel/output` artifacts have been removed from Git so deployments build from the current source. A local development server, typecheck, automated test suite and full browser-based customer/admin/rider acceptance test have not been run in this audit.
 
-## Remaining client-demo checks
+## Remaining production checks
 
-1. Run `npm run typecheck`, `npm run build` and `npm run test` in the project environment.
-2. Verify desktop and mobile rendering in a real browser.
-3. Verify the deployment has authentication and database configuration.
-4. Confirm migrations and catalogue/store/inventory seed records are present.
-5. Complete one customer order and confirm it appears in the admin desk.
+1. Confirm the client's actual Bihar launch city and delivery PIN codes.
+2. Replace all sample stores, service areas, products, stock, fees, prices and ETA data.
+3. Run `npm run typecheck`, `npm run build` and `npm run test` in the project environment.
+4. Verify desktop and mobile behaviour in a real browser.
+5. Complete a customer order and confirm it appears in the admin desk.
 6. Verify staff role restrictions and rider workflow.
 7. Verify Razorpay sandbox/live mode before enabling online payments.
-8. Publish the deployed demo URL and test credentials through a secure channel.
+8. Publish the deployed demo URL and share access credentials through a separate secure channel.
 
 See [CLIENT_DEMO.md](./CLIENT_DEMO.md) for the walkthrough and handoff checklist.
