@@ -25,7 +25,7 @@ export function LocationButton({ catalog, onOpen }: { catalog: Catalog; onOpen: 
 
 export function LocationSheet({ catalog, onClose }: { catalog: Catalog; onClose: () => void }) {
   const setPlace = usePlace((state) => state.setPlace);
-  const [city, setCity] = useState(catalog.areas[0]?.city ?? "Bengaluru");
+  const [city, setCity] = useState(catalog.stores[0]?.city ?? catalog.areas[0]?.city ?? "Patna");
   const [query, setQuery] = useState("");
   const [message, setMessage] = useState("");
   const cities = [...new Set(catalog.areas.map((area) => area.city))];
@@ -73,7 +73,7 @@ export function LocationSheet({ catalog, onClose }: { catalog: Catalog; onClose:
             lat: position.coords.latitude,
             lng: position.coords.longitude,
           });
-          setMessage("MehraIT does not deliver to this pin yet. Bengaluru and Mumbai are live.");
+          setMessage(`Current Bihar demo delivery areas: ${cities.join(", ")}. Choose a listed area or pincode.`);
           return;
         }
         setPlace({
@@ -111,7 +111,8 @@ export function LocationSheet({ catalog, onClose }: { catalog: Catalog; onClose:
         lat: null,
         lng: null,
       });
-      setMessage(`MehraIT is not in ${pin} yet. Try Indiranagar 560038 or Bandra West 400050.`);
+      const examples = catalog.areas.map((item) => `${item.name} ${item.pincode}`).join(", ");
+      setMessage(`MehraIT is not in ${pin} yet. Bihar demo pins: ${examples}.`);
       return;
     }
     choose(area.id);
@@ -133,7 +134,7 @@ export function LocationSheet({ catalog, onClose }: { catalog: Catalog; onClose:
           <input
             value={query}
             onChange={(event) => setQuery(event.target.value)}
-            placeholder="Area or pincode"
+            placeholder="Area or Bihar pincode"
             className="h-11 min-w-0 flex-1 rounded-full border border-line bg-cream px-4 text-sm"
           />
           <button type="button" onClick={checkPincode} className="h-11 rounded-full bg-ink px-4 text-sm font-semibold text-cream">
@@ -154,7 +155,7 @@ export function LocationSheet({ catalog, onClose }: { catalog: Catalog; onClose:
           ))}
         </div>
         <div className="relative mt-4 h-52 overflow-hidden rounded-3xl bg-ink">
-          <p className="absolute top-3 left-3 text-xs font-medium text-cream/80">Service pins · {city}</p>
+          <p className="absolute top-3 left-3 text-xs font-medium text-cream/80">Demo service pins · {city}, Bihar</p>
           {pins.map((pin) => (
             <button
               key={pin.id}
@@ -173,7 +174,7 @@ export function LocationSheet({ catalog, onClose }: { catalog: Catalog; onClose:
               <button type="button" onClick={() => choose(area.id)} className="flex w-full items-center justify-between py-3 text-left">
                 <span>
                   <span className="block font-semibold">{area.name}</span>
-                  <span className="text-sm text-muted">{area.city} · {area.pincode}</span>
+                  <span className="text-sm text-muted">{area.city}, Bihar · {area.pincode}</span>
                 </span>
                 <span className="text-sm font-semibold">Select</span>
               </button>
