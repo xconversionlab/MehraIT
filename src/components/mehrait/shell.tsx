@@ -57,7 +57,7 @@ export function Shell({ children }: { children: ReactNode }) {
             to="/search"
             className="ml-auto hidden h-11 min-w-0 flex-1 items-center rounded-full border border-line bg-cream px-4 text-sm text-muted md:flex"
           >
-            Search milk, atta, bananas
+            Search sattu, makhana, litchi
           </Link>
           <Link to="/cart" className="relative ml-auto grid h-11 w-11 place-items-center rounded-full border border-line bg-cream md:ml-0" aria-label="Cart">
             <ShoppingBag className="size-5" />
