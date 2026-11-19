@@ -3,6 +3,7 @@ import { z } from "zod";
 import { authMiddleware } from "@/lib/auth/middleware";
 import { getSql, type Sql } from "@/lib/db";
 import { num } from "./num";
+import type { AddressSnapshot } from "./types";
 
 function parse<T>(schema: z.ZodType<T>, input: unknown): T {
   const result = schema.safeParse(input);
@@ -80,8 +81,8 @@ export const getRider = createServerFn({ method: "GET" })
       earningsPaise: num(earned[0]?.n),
       jobs: jobs.map((job) => {
         const address = typeof job.address_snapshot === "string"
-          ? (JSON.parse(job.address_snapshot) as Record<string, unknown>)
-          : (job.address_snapshot as Record<string, unknown>);
+          ? (JSON.parse(job.address_snapshot) as AddressSnapshot)
+          : (job.address_snapshot as AddressSnapshot);
         return {
           publicId: job.public_id,
           status: job.status,

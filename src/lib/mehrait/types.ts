@@ -102,6 +102,20 @@ export type Catalog = {
 
 export type CartLine = { variantId: number; qty: number };
 
+export type AddressSnapshot = {
+  label: string;
+  line1: string;
+  line2: string;
+  area: string;
+  city: string;
+  pincode: string;
+  lat: number | null;
+  lng: number | null;
+  contactName: string;
+  contactPhone: string;
+  storeName?: string;
+};
+
 export type Place = {
   areaId: number | null;
   storeId: number | null;

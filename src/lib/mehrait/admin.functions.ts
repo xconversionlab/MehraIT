@@ -4,7 +4,7 @@ import { authMiddleware } from "@/lib/auth/middleware";
 import { getSql, type Sql } from "@/lib/db";
 import { num } from "./num";
 import { assertRole, isStaff } from "./permissions";
-import { STAFF_ROLES } from "./types";
+import { STAFF_ROLES, type AddressSnapshot } from "./types";
 
 async function ensure(sql: Sql, userId: string) {
   const users = await sql<{ name: string; email: string }>`select name, email from "user" where id = ${userId}`;
@@ -644,8 +644,8 @@ export const getDeskOrder = createServerFn({ method: "POST" })
     const refunds = await sql<{ status: string; amount_paise: number }>`
       select status, amount_paise from refunds where order_id = ${order.id} order by id desc limit 1`;
     const snapshot = typeof order.address_snapshot === "string"
-      ? (JSON.parse(order.address_snapshot) as Record<string, unknown>)
-      : (order.address_snapshot as Record<string, unknown>);
+      ? (JSON.parse(order.address_snapshot) as AddressSnapshot)
+      : (order.address_snapshot as AddressSnapshot);
     return {
       publicId: order.public_id,
       status: order.status,

@@ -4,7 +4,7 @@ import { authMiddleware } from "@/lib/auth/middleware";
 import { getSql, type Sql } from "@/lib/db";
 import { num } from "./num";
 import { quoteCart } from "./pricing";
-import type { Coupon } from "./types";
+import type { AddressSnapshot, Coupon } from "./types";
 
 function parse<T>(schema: z.ZodType<T>, input: unknown): T {
   const result = schema.safeParse(input);
@@ -506,8 +506,8 @@ export const getOrder = createServerFn({ method: "POST" })
       from delivery_assignments da join delivery_partners dp on dp.id = da.partner_id
       where da.order_id = ${order.id}`;
     const snapshot = typeof order.address_snapshot === "string"
-      ? (JSON.parse(order.address_snapshot) as Record<string, unknown>)
-      : (order.address_snapshot as Record<string, unknown>);
+      ? (JSON.parse(order.address_snapshot) as AddressSnapshot)
+      : (order.address_snapshot as AddressSnapshot);
     return {
       publicId: order.public_id,
       status: order.status,

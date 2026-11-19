@@ -5,7 +5,7 @@ import { RedirectToSignIn } from "@/lib/auth/gates";
 import { useCurrentUserState } from "@/lib/auth/use-current-user";
 import { cancelOrder, createReview, getOrder } from "@/lib/mehrait/account.functions";
 import { inr } from "@/lib/mehrait/pricing";
-import { ORDER_FLOW, STATUS_LABEL } from "@/lib/mehrait/types";
+import { ORDER_FLOW, STATUS_LABEL, type AddressSnapshot } from "@/lib/mehrait/types";
 import { Shell } from "@/components/mehrait/shell";
 
 export const Route = createFileRoute("/orders/$id")({ component: OrderPage });
@@ -30,7 +30,7 @@ function OrderPage() {
   if (isPending) return <Shell><p className="text-sm text-muted">Checking your session…</p></Shell>;
   if (!user) return <RedirectToSignIn />;
 
-  const address = order?.address ?? {};
+  const address: AddressSnapshot | null = order?.address ?? null;
   const flowIndex = order ? ORDER_FLOW.indexOf(order.status as (typeof ORDER_FLOW)[number]) : -1;
   const terminal = order?.status === "cancelled" || order?.status === "refund_initiated" || order?.status === "refunded";
 
@@ -71,8 +71,8 @@ function OrderPage() {
           </section>
           <section className="rounded-3xl border border-line bg-cream p-4 text-sm">
             <h2 className="font-semibold">Delivering to</h2>
-            <p className="mt-1">{String(address.line1 ?? "")}</p>
-            <p className="text-muted">{String(address.area ?? "")}, {String(address.city ?? "")} {String(address.pincode ?? "")}</p>
+            <p className="mt-1">{address?.line1 ?? ""}</p>
+            <p className="text-muted">{address?.area ?? ""}, {address?.city ?? ""} {address?.pincode ?? ""}</p>
             <ul className="mt-4 space-y-1">
               {order.items.map((item) => (
                 <li key={item.name} className="flex justify-between"><span>{item.name} × {item.qty}</span><span className="tabular-nums">{inr(item.pricePaise * item.qty)}</span></li>
