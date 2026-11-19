@@ -63,7 +63,7 @@ function SearchPage() {
         value={q}
         onChange={(event) => setQ(event.target.value)}
         onBlur={() => { if (q.trim()) remember(q.trim()); }}
-        placeholder="Try milk, atta, banana"
+        placeholder="Try sattu, makhana, litchi"
         className="mt-3 h-12 w-full rounded-full border border-line bg-cream px-4"
       />
       {suggestions.length > 0 && q.trim() ? (
